@@ -478,7 +478,7 @@ class TwitterOAuth extends Config
     ) {
         $this->resetLastResponse();
         $this->resetAttemptsNumber();
-        $url = sprintf('%s/%s/%s.json', $host, self::API_VERSION, $path);
+        $url = sprintf($this->urlPattern, $host, $this->apiVersion, $path);
         $this->response->setApiPath($path);
         if (!$json) {
             $parameters = $this->cleanUpParameters($parameters);
