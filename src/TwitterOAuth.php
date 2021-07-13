@@ -20,7 +20,6 @@ use Composer\CaBundle\CaBundle;
  */
 class TwitterOAuth extends Config
 {
-    private const API_VERSION = '1.1';
     private const API_HOST = 'https://api.twitter.com';
     private const UPLOAD_HOST = 'https://upload.twitter.com';
 
@@ -36,6 +35,10 @@ class TwitterOAuth extends Config
     private $signatureMethod;
     /** @var int Number of attempts we made for the request */
     private $attempts = 0;
+    /** @var int The API version */
+    private $apiVersion = '1.1';
+    /** @var string The URL pattern */
+    private $urlPattern = '%s/%s/%s.json';
 
     /**
      * Constructor
@@ -60,6 +63,22 @@ class TwitterOAuth extends Config
         if (empty($oauthToken) && !empty($oauthTokenSecret)) {
             $this->setBearer($oauthTokenSecret);
         }
+    }
+    
+     /**
+     */
+    public function useNewApi(): void
+    {
+        $this->apiVersion = 2;
+        $this->urlPattern = '%s/%s/%s';
+    }
+
+    /**
+     */
+    public function useCurrentApi(): void
+    {
+        $this->apiVersion = 1.1;
+        $this->urlPattern = '%s/%s/%s.json';
     }
 
     /**
